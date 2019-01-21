@@ -21,6 +21,7 @@ rne %>%
   # select(-`Code profession`) %>%
   group_by(`Libellé de la profession`) %>%
   summarise(n = n(), age = mean(Age)) %>%
+  arrange(`Nom de l'élu`)%>%
   View()
 
 #long and large formats
@@ -28,5 +29,8 @@ rne %>%
 rne %>%
   gather("Office", "Value", `Conseiller Municipal`:Maire) %>%
   filter(Value  %in% "true")  %>% #remove all values which are not true
+  filter(! (`Date de naissance` %in% lubridate::ymd("1900-01-01")))  %>%
   select(-Value)  %>% #Delete column
+  group_by(Office) %>% 
+  summarise(age = mean(Age, na.rm = TRUE)) %>%
   View()
