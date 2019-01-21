@@ -34,3 +34,14 @@ rne %>%
   group_by(Office) %>% 
   summarise(age = mean(Age, na.rm = TRUE)) %>%
   View()
+
+rne %>%
+  gather("Office", "Value", `Conseiller Municipal`:Maire) %>%
+  filter(Value  %in% "true")  %>% #remove all values which are not true
+  select(-Value)  %>% #Delete column
+  group_by(`Identifiant`) %>% 
+  summarise(offices = n(), occupation = unique(`Libellé de la profession`), gender = unique(`Code sexe`)) %>%
+  ungroup ()  %>%
+  group_by(occupation, gender) %>%
+  summarise(offices = mean(offices)
+  View()
