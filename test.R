@@ -17,8 +17,16 @@ rne <- read_csv("Repertoire-national-des-elus.csv")
 rne %>%
   filter(`Code sexe` == "F") %>%
   mutate(`Code sexe` = recode (`Code sexe`, "F" = "Female", "M" = "Male")) %>%
-  arrange(`Date de naissance`) %>%
- # select(-`Code profession`) %>%
+  arrange(`Date de naissance`) %>% #arrange ((desc())
+  # select(-`Code profession`) %>%
   group_by(`Libellé de la profession`) %>%
   summarise(n = n(), age = mean(Age)) %>%
+  View()
+
+#long and large formats
+
+rne %>%
+  gather("Office", "Value", `Conseiller Municipal`:Maire) %>%
+  filter(Value  %in% "true")  %>% #remove all values which are not true
+  select(-Value)  %>% #Delete column
   View()
