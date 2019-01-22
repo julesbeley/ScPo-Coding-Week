@@ -82,6 +82,9 @@ rne %>%
 library(dplyr)
 library(ggplot2)
 library(scales)
+install.packages("hrbrthemes")
+library(hrbrthemes)
+
 rne %>%
   count(`Libellé de la profession`, sort = TRUE) %>%
   filter(!is.na(`Libellé de la profession`))  %>% #removes N.A at the top
@@ -93,7 +96,7 @@ rne %>%
     colour = if_else(n > 40000, "white", "black")
   ) %>%
   ggplot(aes(x = occupation, y = n)) +
-  geom_bar(stat = "identity", width = 0.6) +
+  geom_bar(stat = "identity", width = 0.6, fill="darkblue") +
   scale_y_continuous(labels = scales::comma) +
   coord_flip() + # flip x and y axis
   geom_text(
@@ -102,11 +105,11 @@ rne %>%
     vjust = "center",
     size = 2
   ) +
-  scale_color_manual(values = c("black", "white"), guide = FALSE) +
+  scale_color_manual(values = c("darkblue", "white"), guide = FALSE) +
   xlab("") +
   ylab("") +
   ylim (0, NA) +
   scale_x_discrete(labels = NULL) +
-  theme(axis.ticks.y = element_blank())
+  theme(axis.ticks.y = element_blank()) +
+  theme_ipsum(title = "Number of elected officials in France in 2018 by occupation", caption= "Source: RNE (Ministère de l'intérieur), computation by Sciences" )
 
-#define the x axis label, but removes it.
